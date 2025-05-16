@@ -5,37 +5,43 @@ using System;
 
 public class GameplayManager : MonoBehaviour
 {
+    public GameplayDataScriptableObject GameDataConfig;
     public event Action<bool, ScoreData> OnEndGameAction;
 
     [SerializeField] private DealerController dealerController;
     [SerializeField] private MatchController matchController;
     [SerializeField] private ScoreController scoreController;
+    [SerializeField] private TimerController timerController;
+
 
     public void Start()
     {
         dealerController.OnCardClicked += OnCardClicked;
+
         matchController.OnCardsMatch += OnCardsMatch;
         matchController.OnCardsMissMatch += OnCardsMissMatch;
+
+        timerController.OnTimeEnds += OnTimeEnds;
 
     }
 
 
     public void StartGamePlay(int horizontalCards, int verticalCards)
     {
-
         dealerController.PopulateBoard(horizontalCards, verticalCards);
+        timerController.Init(GameDataConfig.gameplayData.gameTimeSeconds);
     }
 
 
     private void OnCardClicked(CardController card)
     {
-        print(card.Data.cardType.ToString());
         matchController.CheckCard(card);
     }
     private void OnCardsMatch(CardController cardA, CardController cardB)
     {
-        scoreController.AddScore(1);
+        scoreController.AddScore(GameDataConfig.gameplayData.matchPoints);
         scoreController.AddCombo();
+
         dealerController.DeleteCard(cardA);
         dealerController.DeleteCard(cardB);
 
@@ -59,11 +65,21 @@ public class GameplayManager : MonoBehaviour
         return dealerController.Cards.Count <= 0;
     }
 
-
+    private void OnTimeEnds()
+    {
+        OnEndGame(false);
+    }
     public void OnEndGame(bool win)
     {
+        scoreController.SetScoreTime(timerController.ActualTime);
+
         OnEndGameAction?.Invoke(win,scoreController.ScoreData);
+
         scoreController.ClearData();
+
+        matchController.ClearCheck();
+
+        timerController.OnStopTimer();
     }
     public void SaveGame()
     {
@@ -78,10 +94,12 @@ public class GameplayManager : MonoBehaviour
 
     }
     private void OnDestroy()
-    {
-
+    { 
         dealerController.OnCardClicked -= OnCardClicked;
+
         matchController.OnCardsMatch -= OnCardsMatch;
         matchController.OnCardsMissMatch -= OnCardsMissMatch;
+
+        timerController.OnTimeEnds -= OnTimeEnds;
     }
 }

@@ -8,6 +8,7 @@ public class ScoreData
     public int score;
     public int actualCombo;
     public int maxCombos;
+    public float time;
 }
 public class ScoreController : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class ScoreController : MonoBehaviour
     public ScoreData ScoreData => _scoreData;
     public void AddScore(int deltaScore)
     {
-        if(_scoreData.actualCombo > 0)
+        if(_scoreData.actualCombo > 1)
         {
 
             _scoreData.score += deltaScore * _scoreData.actualCombo;
@@ -31,15 +32,19 @@ public class ScoreController : MonoBehaviour
     public void AddCombo()
     {
         _scoreData.actualCombo++;
-        if(_scoreData.actualCombo > _scoreData.maxCombos)
+        if(_scoreData.actualCombo > _scoreData.maxCombos && _scoreData.actualCombo > 1)
         {
 
-            _scoreData.maxCombos = _scoreData.actualCombo;
+            _scoreData.maxCombos = _scoreData.actualCombo - 1;
         }
     }
     public void ResetCombos()
     {
         _scoreData.actualCombo = 0;
+    }
+    public void SetScoreTime(float time)
+    {
+        _scoreData.time = time;
     }
     public void ClearData()
     {

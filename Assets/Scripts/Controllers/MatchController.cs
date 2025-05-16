@@ -56,7 +56,7 @@ public class MatchController : MonoBehaviour
     }
 
 
-    private void ClearCheck()
+    public void ClearCheck()
     {
         _cardA = null;
         _cardB = null;
