@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<Sprite> cardSprites;
+    [SerializeField] private DealerController dealerController;
+    [SerializeField] private MatchController matchController;
+
+    public void StartGamePlay()
     {
-        
+
+    }
+    public void OnEndGame(bool win)
+    {
+
+    }
+    public void SaveGame()
+    {
+
+    }
+    public void LoadGame()
+    {
+
+    }
+    public void QuitGame()
+    {
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
