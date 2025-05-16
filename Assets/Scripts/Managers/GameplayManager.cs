@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] private List<Sprite> cardSprites;
+    [SerializeField] private List<Color> cardSprites;
     [SerializeField] private DealerController dealerController;
     [SerializeField] private MatchController matchController;
+    [SerializeField] private ScoreController scoreController;
+
 
     public void StartGamePlay()
     {
