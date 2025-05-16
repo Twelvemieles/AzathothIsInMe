@@ -31,10 +31,14 @@ public class CardController : MonoBehaviour
 {
     private CardData _data;
     private CardView _view;
+    private DealerController _dealerController;
 
-    public CardController Init(CardData.CardType _cardType,CardView view, int _cardBoardIndex)
+    public CardData Data => _data;
+
+    public CardController Init(CardData.CardType _cardType,CardView view, int _cardBoardIndex, DealerController dealerController)
     {
         _view = view;
+        _dealerController = dealerController;
         _data = new CardData()
         {
             cardState = CardData.CardState.FaceDown,
@@ -42,20 +46,34 @@ public class CardController : MonoBehaviour
             cardBoardIndex = _cardBoardIndex
         };
 
+        _view.SetCardImage(GameManager.inst.SpritesManager.GetCardSpriteWithType(_data.cardType));
+
         return this;
+    }
+    public void OnClick()
+    {
+        _dealerController.OnClickedCard(this);
     }
 }
 public class CardView : MonoBehaviour
 {
-    [SerializeField] private CardData.CardType cardType;
+
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer cardImage;
 
     private CardController _controller = new CardController();
 
-    private CardController Init(int cardBoardIndex)
+    public CardController Init(int cardBoardIndex, CardData.CardType cardType, DealerController dealerController)
     {
-        return _controller.Init(cardType,this,cardBoardIndex);
+        return _controller.Init(cardType,this,cardBoardIndex, dealerController);
+    }
+    public void ClickCard()
+    {
+        _controller.OnClick();
+    }
+    public void SetCardImage(Color sprite)
+    {
+        cardImage.color = sprite;
     }
 
 }

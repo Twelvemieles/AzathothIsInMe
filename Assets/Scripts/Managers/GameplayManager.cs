@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] private List<Color> cardSprites;
     [SerializeField] private DealerController dealerController;
     [SerializeField] private MatchController matchController;
     [SerializeField] private ScoreController scoreController;
 
-
+    public void Start()
+    {
+        dealerController.OnCardClicked += OnCardClicked;
+        dealerController.PopulateBoard(3, 4);
+    }
+    private void OnCardClicked(CardController card)
+    {
+        print(card.Data.cardType.ToString());
+    }
     public void StartGamePlay()
     {
 
@@ -30,5 +37,9 @@ public class GameplayManager : MonoBehaviour
     {
 
     }
+    private void OnDestroy()
+    {
 
+        dealerController.OnCardClicked -= OnCardClicked;
+    }
 }
