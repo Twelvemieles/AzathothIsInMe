@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
    [HideInInspector] public UIManager UIManager;
    [HideInInspector] public AudioManager AudioManager;
    [HideInInspector] public SaveManager SaveManager;
+   public GameplayManager gameplayManager;
 
 
     private void Start()
@@ -23,5 +24,36 @@ public class GameManager : MonoBehaviour
         }
 
         SpritesManager = GetComponent<SpritesManager>();
+        UIManager = GetComponent<UIManager>();
+        AudioManager = GetComponent<AudioManager>();
+        SaveManager = GetComponent<SaveManager>(); 
+
+        gameplayManager.OnEndGameAction += EndGamePlay;
     }
+
+    public void StartGame()
+    {
+
+    }
+
+    public void StartGameplay(int horizontalCards, int verticalCards)
+    {
+        gameplayManager.StartGamePlay(horizontalCards, verticalCards);
+        UIManager.ShowGameplayScreen();
+    }
+    public void EndGamePlay(bool win,ScoreData scoreData)
+    {
+        UIManager.OnEndgame(win, scoreData);
+    }
+
+    public void QuitGameplay()
+    {
+
+    }
+
+    public void QuitGame()
+    {
+
+    }
+
 }

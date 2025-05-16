@@ -10,7 +10,8 @@ public class DealerController : MonoBehaviour
     [SerializeField] private CardView cardPrefab;
     [SerializeField] private Transform cardMatrixPanel;
 
-    private List<CardController> cards = new List<CardController>();
+    private List<CardController> _cards = new List<CardController>();
+    public List<CardController> Cards => _cards;
 
     public void PopulateBoard(int horizontalCards, int verticalCards)
     {
@@ -40,8 +41,8 @@ public class DealerController : MonoBehaviour
     }
     private void CreateCard(CardData.CardType cardType)
     {
-        var card = Instantiate(cardPrefab, cardMatrixPanel).Init(cards.Count, cardType,this);
-        cards.Add(card);
+        var card = Instantiate(cardPrefab, cardMatrixPanel).Init(_cards.Count, cardType,this);
+        _cards.Add(card);
     }
     public void OnClickedCard(CardController card)
     {
@@ -49,15 +50,19 @@ public class DealerController : MonoBehaviour
     }
     public void DeleteCard(CardController card)
     {
-
+        if(_cards.Contains(card))
+        {
+            _cards.Remove(card);
+        }
+        card.DestroyCard();
     }
     public void ClearCards()
     {
-        foreach(var card in cards)
+        foreach(var card in _cards)
         {
-            Destroy(card.gameObject);
+            card.DestroyCard();
         }
-        cards = new List<CardController>();
+        _cards = new List<CardController>();
     }
 
 }

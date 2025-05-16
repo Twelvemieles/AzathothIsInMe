@@ -27,7 +27,7 @@ public class CardData
     }
 
 }
-public class CardController : MonoBehaviour
+public class CardController 
 {
     private CardData _data;
     private CardView _view;
@@ -54,6 +54,10 @@ public class CardController : MonoBehaviour
     {
         _dealerController.OnClickedCard(this);
     }
+    public void DestroyCard()
+    {
+        _view.DestroyCard();
+    }
 }
 public class CardView : MonoBehaviour
 {
@@ -75,7 +79,10 @@ public class CardView : MonoBehaviour
     {
         cardImage.color = sprite;
     }
-
+    public void DestroyCard()
+    {
+        MonoBehaviour.Destroy(gameObject);
+    }
 }
 
 
