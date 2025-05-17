@@ -4,6 +4,9 @@ using UnityEngine;
 
 public static class MatchDMTools
 {
+    /// <summary>
+    /// Returns a randomly mixed list
+    /// </summary>
     public static List<T> MixList<T>(List<T> list)
     {
         List<T> value = list;

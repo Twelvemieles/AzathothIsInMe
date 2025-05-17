@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-
+/// <summary>
+/// Manages the core gameplay loop including card interactions, score tracking,
+/// timer management, and handling win/loss states.
+/// </summary>
 public class GameplayManager : MonoBehaviour
 {
     public GameplayDataScriptableObject GameDataConfig;
@@ -24,10 +27,14 @@ public class GameplayManager : MonoBehaviour
 
         timerController.OnTimeEnds += OnTimeEnds;
 
-
     }
 
 
+    /// <summary>
+    /// Initializes and starts a new gameplay session with the specified board size.
+    /// </summary>
+    /// <param name="horizontalCards">Number of cards per row</param>
+    /// <param name="verticalCards">Number of cards per column</param>
     public void StartGamePlay(int horizontalCards, int verticalCards)
     {
         dealerController.PopulateBoard(horizontalCards, verticalCards);
@@ -35,13 +42,17 @@ public class GameplayManager : MonoBehaviour
         scoreController.ShowScorePanel();
         scoreController.ClearData();
     }
-
-
+ 
     private void OnCardClicked(CardController card)
     {
         matchController.CheckCard(card);
         GameManager.inst.AudioManager.PlaySFX("FlipCard");
     }
+    /// <summary>
+    /// Called when two cards are matched. Updates score, combo, deletes cards, and checks win condition.
+    /// </summary>
+    /// <param name="cardA">First matched card</param>
+    /// <param name="cardB">Second matched card</param>
     private void OnCardsMatch(CardController cardA, CardController cardB)
     {
         scoreController.AddScore(GameDataConfig.gameplayData.matchPoints);
@@ -59,6 +70,10 @@ public class GameplayManager : MonoBehaviour
         scoreController.ResetCombos();
         GameManager.inst.AudioManager.PlaySFX("MissMatch");
     }
+    /// <summary>
+    /// Checks whether all cards have been cleared from the board.
+    /// If so, ends the game as a win.
+    /// </summary>
     private void CheckIfWin()
     {
         if (IsCardTableEmpty())
@@ -76,6 +91,9 @@ public class GameplayManager : MonoBehaviour
     {
         OnEndGame(false);
     }
+    /// Ends the gameplay session, updates final score data, and triggers game over events.
+    /// </summary>
+    /// <param name="win">True if the player has won, false if lost</param>
     public void OnEndGame(bool win)
     {
         scoreController.SetScoreTime(timerController.ActualTime);
@@ -99,6 +117,9 @@ public class GameplayManager : MonoBehaviour
             GameManager.inst.AudioManager.PlaySFX("GameOverLose");
         }
     }
+    /// <summary>
+    /// Saves the current game state, including card positions and score.
+    /// </summary>
     public void SaveGame()
     {
         
@@ -125,16 +146,23 @@ public class GameplayManager : MonoBehaviour
         GameManager.inst.SaveGame(data);
 
     }
+    /// <summary>
+    /// Loads a previously saved game state and resumes the session.
+    /// </summary>
+    /// <param name="gameData">Saved game data to be restored</param>
     public void LoadGame(GameData gameData)
     {
         dealerController.PopulateBoard(gameData);
         timerController.Init(gameData.scoreData.time);
         scoreController.ShowScorePanel(gameData);
     }
+    /// <summary>
+    /// Triggers game exit logic and ends the current game session.
+    /// </summary>
     public void QuitGame()
     {
-
-    }
+        GameManager.inst.QuitGameplay();
+    } 
     private void OnDestroy()
     { 
         dealerController.OnCardClicked -= OnCardClicked;
