@@ -31,6 +31,8 @@ public class GameplayManager : MonoBehaviour
     {
         dealerController.PopulateBoard(horizontalCards, verticalCards);
         timerController.Init(GameDataConfig.gameplayData.gameTimeSeconds);
+        scoreController.ShowScorePanel();
+        scoreController.ClearData();
     }
 
 
@@ -80,10 +82,12 @@ public class GameplayManager : MonoBehaviour
         OnEndGameAction?.Invoke(win,scoreController.ScoreData);
 
         scoreController.ClearData();
+        scoreController.HideScorePanel();
 
         matchController.ClearCheck();
 
         timerController.OnStopTimer();
+
 
         if(win)
         {
