@@ -27,9 +27,9 @@ public class EngamePanel : MonoBehaviour
             WinPanel.gameObject.SetActive(false);
             LosePanel.gameObject.SetActive(true);
         }
-        SetScoreText(_scoreData.score.ToString());
-        SetMaxCombosText(_scoreData.maxCombos.ToString());
-        SetMissMatchedText(_scoreData.missMatches.ToString());
+        SetScoreText(_scoreData != null ? _scoreData.score.ToString() : "");
+        SetMaxCombosText(_scoreData != null ? _scoreData.maxCombos.ToString() : "");
+        SetMissMatchedText(_scoreData != null ? _scoreData.missMatches.ToString() : "");
     }
 
     public void CloseEndgamePanel()
