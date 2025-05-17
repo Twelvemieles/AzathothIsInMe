@@ -53,6 +53,21 @@ public class CardController
 
         return this;
     }
+    public CardController Init(CardData _cardData,CardView view, DealerController dealerController)
+    {
+        _view = view;
+        _dealerController = dealerController;
+        _data = new CardData()
+        {
+            cardState = CardData.CardState.FaceDown,
+            cardType = _cardData.cardType,
+            cardBoardIndex = _cardData.cardBoardIndex
+        };
+
+        PopulateCard();
+
+        return this;
+    }
     public void OnClick()
     {
         if(_data.cardState == CardData.CardState.FaceDown)
@@ -97,6 +112,10 @@ public class CardView : MonoBehaviour
     public CardController Init(int cardBoardIndex, CardData.CardType cardType, DealerController dealerController)
     {
         return _controller.Init(cardType,this,cardBoardIndex, dealerController);
+    }
+    public CardController Init(CardData cardData, DealerController dealerController)
+    {
+        return _controller.Init(cardData ,this, dealerController);
     }
     public void ClickCard()
     {

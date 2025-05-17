@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -100,11 +101,35 @@ public class GameplayManager : MonoBehaviour
     }
     public void SaveGame()
     {
+        
+        // Parse cardController List to CardData List 
+
+        List<CardData> cardDatas = dealerController.Cards.Select(dto => new CardData
+        {
+            cardState = dto.Data.cardState,
+        cardBoardIndex = dto.Data.cardBoardIndex,
+        cardType = dto.Data.cardType
+        }).ToList();
+
+        // Updates Time on Score Data
+        scoreController.SetScoreTime(timerController.ActualTime);
+
+        // Creates the data to be saved
+        GameData data = new GameData()
+        {
+            scoreData = scoreController.ScoreData,
+            cards = cardDatas,
+            cardsMatrix = dealerController.CardsMatrix
+        };
+
+        GameManager.inst.SaveGame(data);
 
     }
-    public void LoadGame()
+    public void LoadGame(GameData gameData)
     {
-
+        dealerController.PopulateBoard(gameData);
+        timerController.Init(gameData.scoreData.time);
+        scoreController.ShowScorePanel(gameData);
     }
     public void QuitGame()
     {

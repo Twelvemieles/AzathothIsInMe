@@ -48,7 +48,21 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnEndgame(win, scoreData);
     }
+    public void SaveGame(GameData data)
+    {
+        SaveManager.Save(data);
+    }
+    public void LoadGame ()
+    {
+        var gameData = SaveManager.Load();
+        if(gameData != null)
+        {
 
+            UIManager.ShowGameplayScreen();
+
+            gameplayManager.LoadGame(gameData);
+        }
+    }
     public void QuitGameplay()
     {
 

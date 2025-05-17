@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-[SerializeField]
+[System.Serializable]
 public class ScoreData
 {
     public int score;
@@ -100,8 +100,13 @@ public class ScoreController : MonoBehaviour
     {
         scorePanel.gameObject.SetActive(false);
     }
-    public  void ShowScorePanel()
+    public  void ShowScorePanel(GameData gameData = null)
     {
         scorePanel.gameObject.SetActive(true);
+        if(gameData != null)
+        {
+            _scoreData = gameData.scoreData;
+        }
+        UpdateUI();
     }
 }
