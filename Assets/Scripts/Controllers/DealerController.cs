@@ -37,6 +37,9 @@ public class DealerController : MonoBehaviour
         cardMatrixPanel.localScale = Vector3.one * GetMatrixScaleWithColumns(horizontalCards);
 
         _cardsMatrix = new Vector2(horizontalCards, verticalCards);
+
+
+        StartCoroutine(ShowAllCards());
     }
 
     /// <summary>
@@ -59,8 +62,25 @@ public class DealerController : MonoBehaviour
         cardMatrixPanel.localScale = Vector3.one * GetMatrixScaleWithColumns(horizontalCards);
 
         _cardsMatrix = new Vector2(horizontalCards, verticalCards);
-    }
 
+    }
+    private IEnumerator ShowAllCards()
+    {
+        foreach(var card in _cards)
+        {
+            card.ShowCard();
+            yield return new WaitForSeconds(0.05f);
+        }
+
+
+        yield return new WaitForSeconds(1f);
+
+        foreach (var card in _cards)
+        {
+            card.HideCard();
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
     /// <summary>
     /// Coroutine used to refresh the GridLayoutGroup and ensure correct layout alignment.
     /// </summary>

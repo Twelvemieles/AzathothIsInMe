@@ -161,6 +161,7 @@ public class GameplayManager : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
+        OnEndGame(false);
         GameManager.inst.QuitGameplay();
     } 
     private void OnDestroy()
