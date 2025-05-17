@@ -13,13 +13,21 @@ public class CardData
     public int cardBoardIndex;
     public enum CardType
     {
-        Red,
-        Blue,
-        White,
-        Black,
-        Green,
-        Yellow,
-        Purple
+        Monster1,
+        Monster2,
+        Monster3,
+        Monster4,
+        Monster5,
+        Monster6,
+        Monster7,
+        Monster8,
+        Monster9,
+        Monster10,
+        Monster11,
+        Monster12,
+        Monster13,
+        Monster14,
+        Monster15
     }
     public enum CardState
     {
@@ -185,11 +193,11 @@ public class CardView : MonoBehaviour
         _controller.OnFinishAnimation();
     }
     /// <summary>
-    /// Applies a color to the card image based on the assigned type.
+    /// Applies a sprite to the card image based on the assigned type.
     /// </summary>
-    public void SetCardImage(Color sprite)
+    public void SetCardImage(Sprite sprite)
     {
-        cardImage.color = sprite;
+        cardImage.sprite = sprite;
     }
     /// <summary>
     /// Destroys the card GameObject from the scene.

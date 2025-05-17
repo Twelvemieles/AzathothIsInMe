@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpritesManager : MonoBehaviour
 {
 
-    [SerializeField] private List<Color> cardSprites;
-    public Color GetCardSpriteWithType(CardData.CardType type)
+    [SerializeField] private SpritesScriptableObject spritesConfig;
+    public Sprite GetCardSpriteWithType(CardData.CardType type)
     {
-        return cardSprites[(int)type];
+        return spritesConfig.SpritesConfig.Find(x => x.id == type.ToString()).sprite;
     }
 }
