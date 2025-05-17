@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee529cf0d8060c46a4c2a92322ccb45, type: 3}
+  m_Name: SFXConfig
+  m_EditorClassIdentifier: 
+  SFXConfigs:
+  - id: FlipCard
+    audioClip: {fileID: 8300000, guid: e10a9f1304c221c4ba41e54d8c152837, type: 3}
+  - id: Combo
+    audioClip: {fileID: 8300000, guid: 7e6ebfe72bd30024e963e884f8c32b05, type: 3}
+  - id: DoubleCombo
+    audioClip: {fileID: 8300000, guid: 80c4054121f174f41908e7ff226b591b, type: 3}
+  - id: TripleCombo
+    audioClip: {fileID: 8300000, guid: 60928ac08c01d9f44a2e2accb24d183f, type: 3}
+  - id: MissMatch
+    audioClip: {fileID: 8300000, guid: 630fb78e7acb1024bab27e01833078a9, type: 3}
+  - id: BackgroundMusic
+    audioClip: {fileID: 8300000, guid: 0f2568d36a61abc4db72b4f53afa3f1a, type: 3}
+  - id: Match
+    audioClip: {fileID: 8300000, guid: 081fdac620c53374ab6b94a6b5c046fb, type: 3}
+  - id: GameOverWin
+    audioClip: {fileID: 8300000, guid: b45fcfba484f9c741a4f22dc4c276353, type: 3}
+  - id: GameOverLose
+    audioClip: {fileID: 8300000, guid: 3113e51b4e3e63149b57078bc7ae9c03, type: 3}
+  - id: Button
+    audioClip: {fileID: 8300000, guid: e0c49f4b2f59b704684fd0b482d50359, type: 3}
