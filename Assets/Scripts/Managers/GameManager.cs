@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
         SaveManager = GetComponent<SaveManager>(); 
 
         gameplayManager.OnEndGameAction += EndGamePlay;
+
+
+        GameManager.inst.AudioManager.PlayMusic("BackgroundMusic");
     }
 
     public void StartGame()

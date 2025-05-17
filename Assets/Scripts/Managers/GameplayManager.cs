@@ -23,6 +23,7 @@ public class GameplayManager : MonoBehaviour
 
         timerController.OnTimeEnds += OnTimeEnds;
 
+
     }
 
 
@@ -36,13 +37,16 @@ public class GameplayManager : MonoBehaviour
     private void OnCardClicked(CardController card)
     {
         matchController.CheckCard(card);
+        GameManager.inst.AudioManager.PlaySFX("FlipCard");
     }
     private void OnCardsMatch(CardController cardA, CardController cardB)
     {
         scoreController.AddScore(GameDataConfig.gameplayData.matchPoints);
+        scoreController.AddCombo();
         dealerController.DeleteCard(cardA);
         dealerController.DeleteCard(cardB);
 
+        GameManager.inst.AudioManager.PlaySFX("Match");
         CheckIfWin();
 
     }
@@ -50,6 +54,7 @@ public class GameplayManager : MonoBehaviour
     private void OnCardsMissMatch()
     {
         scoreController.ResetCombos();
+        GameManager.inst.AudioManager.PlaySFX("MissMatch");
     }
     private void CheckIfWin()
     {
@@ -79,6 +84,15 @@ public class GameplayManager : MonoBehaviour
         matchController.ClearCheck();
 
         timerController.OnStopTimer();
+
+        if(win)
+        {
+            GameManager.inst.AudioManager.PlaySFX("GameOverWin");
+        }
+        else
+        {
+            GameManager.inst.AudioManager.PlaySFX("GameOverLose");
+        }
     }
     public void SaveGame()
     {
