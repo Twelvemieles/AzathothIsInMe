@@ -9,6 +9,7 @@ public class EngamePanel : MonoBehaviour
     [SerializeField] private Transform LosePanel;
     [SerializeField] TextMeshProUGUI scoreText; 
     [SerializeField] TextMeshProUGUI maxCombosText; 
+    [SerializeField] TextMeshProUGUI missMatchesText; 
 
     private ScoreData _scoreData;
 
@@ -28,6 +29,7 @@ public class EngamePanel : MonoBehaviour
         }
         SetScoreText(_scoreData.score.ToString());
         SetMaxCombosText(_scoreData.maxCombos.ToString());
+        SetMissMatchedText(_scoreData.missMatches.ToString());
     }
 
     public void CloseEndgamePanel()
@@ -48,5 +50,9 @@ public class EngamePanel : MonoBehaviour
     private void SetMaxCombosText(string text)
     {
         maxCombosText.text = text;
+    }
+    private void SetMissMatchedText(string text)
+    {
+        missMatchesText.text = text;
     }
 }

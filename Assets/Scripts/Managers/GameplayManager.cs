@@ -40,14 +40,13 @@ public class GameplayManager : MonoBehaviour
     private void OnCardsMatch(CardController cardA, CardController cardB)
     {
         scoreController.AddScore(GameDataConfig.gameplayData.matchPoints);
-        scoreController.AddCombo();
-
         dealerController.DeleteCard(cardA);
         dealerController.DeleteCard(cardB);
 
         CheckIfWin();
 
     }
+ 
     private void OnCardsMissMatch()
     {
         scoreController.ResetCombos();

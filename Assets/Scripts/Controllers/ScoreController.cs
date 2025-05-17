@@ -8,6 +8,7 @@ public class ScoreData
     public int score;
     public int actualCombo;
     public int maxCombos;
+    public int missMatches;
     public float time;
 }
 public class ScoreController : MonoBehaviour
@@ -28,8 +29,10 @@ public class ScoreController : MonoBehaviour
             _scoreData.score += deltaScore;
         }
 
+        AddCombo();
+
     }
-    public void AddCombo()
+    private void AddCombo()
     {
         _scoreData.actualCombo++;
         if(_scoreData.actualCombo > _scoreData.maxCombos && _scoreData.actualCombo > 1)
@@ -40,6 +43,10 @@ public class ScoreController : MonoBehaviour
     }
     public void ResetCombos()
     {
+        _scoreData.missMatches++;
+
+        int scoreToReduce = -(int)((float)GameManager.inst.gameplayManager.GameDataConfig.gameplayData.matchPoints * GameManager.inst.gameplayManager.GameDataConfig.gameplayData.missMultiplierPoints);
+        AddScore(scoreToReduce);
         _scoreData.actualCombo = 0;
     }
     public void SetScoreTime(float time)

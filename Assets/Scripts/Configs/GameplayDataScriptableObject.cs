@@ -7,6 +7,7 @@ using System;
 public class GameplayData
 {
     public int matchPoints;
+    public float missMultiplierPoints;
     public float gameTimeSeconds;
 
 }

@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameplayData:
     matchPoints: 2
+    missMultiplierPoints: 0.5
     gameTimeSeconds: 30

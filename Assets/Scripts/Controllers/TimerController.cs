@@ -39,7 +39,7 @@ public class TimerController : MonoBehaviour
             if (_timerCoroutine != null)
             {
                 StopCoroutine(_timerCoroutine);
-                OnTimeEnds?.Invoke();
+
                 _timerCoroutine = null;
             }
             UpdateUI();
@@ -56,6 +56,7 @@ public class TimerController : MonoBehaviour
             {
                 _actualTime = 0;
                 OnStopTimer();
+                OnTimeEnds?.Invoke();
             }
             UpdateUI();
             yield return null;
