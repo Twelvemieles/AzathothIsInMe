@@ -74,8 +74,11 @@ public class ScoreController : MonoBehaviour
     {
         _scoreData.missMatches++;
 
-        int scoreToReduce = -(int)((float)GameManager.inst.gameplayManager.GameDataConfig.gameplayData.matchPoints * GameManager.inst.gameplayManager.GameDataConfig.gameplayData.missMultiplierPoints);
-        AddScore(scoreToReduce);
+        //This reduce the score everytime the player fails (could make the game harder)
+
+/*        int scoreToReduce = -(int)((float)GameManager.inst.gameplayManager.GameDataConfig.gameplayData.matchPoints * GameManager.inst.gameplayManager.GameDataConfig.gameplayData.missMultiplierPoints);
+        AddScore(scoreToReduce);*/
+
         _scoreData.actualCombo = 0;
         UpdateUI();
     }
