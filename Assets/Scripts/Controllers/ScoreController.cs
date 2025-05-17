@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [SerializeField]
 public class ScoreData
@@ -13,9 +14,15 @@ public class ScoreData
 }
 public class ScoreController : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI comboText;
+    [SerializeField] private Transform scorePanel;
+
     private ScoreData _scoreData = new ScoreData();
+    
 
     public ScoreData ScoreData => _scoreData;
+
     public void AddScore(int deltaScore)
     {
         if(_scoreData.actualCombo > 1)
@@ -29,7 +36,12 @@ public class ScoreController : MonoBehaviour
             _scoreData.score += deltaScore;
         }
 
+        if(_scoreData.score <= 0)
+        {
+            _scoreData.score = 0;
+        }
 
+        UpdateUI();
     }
     public void AddCombo()
     {
@@ -54,7 +66,9 @@ public class ScoreController : MonoBehaviour
                     break;
             }
         }
-        
+        UpdateUI();
+
+
     }
     public void ResetCombos()
     {
@@ -63,6 +77,7 @@ public class ScoreController : MonoBehaviour
         int scoreToReduce = -(int)((float)GameManager.inst.gameplayManager.GameDataConfig.gameplayData.matchPoints * GameManager.inst.gameplayManager.GameDataConfig.gameplayData.missMultiplierPoints);
         AddScore(scoreToReduce);
         _scoreData.actualCombo = 0;
+        UpdateUI();
     }
     public void SetScoreTime(float time)
     {
@@ -71,5 +86,19 @@ public class ScoreController : MonoBehaviour
     public void ClearData()
     {
         _scoreData = new ScoreData();
+        UpdateUI();
+    }
+    private void UpdateUI()
+    {
+        scoreText.text = _scoreData.score.ToString();
+        comboText.text = _scoreData.actualCombo.ToString();
+    }
+    public void HideScorePanel()
+    {
+        scorePanel.gameObject.SetActive(false);
+    }
+    public  void ShowScorePanel()
+    {
+        scorePanel.gameObject.SetActive(true);
     }
 }
