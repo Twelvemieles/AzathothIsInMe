@@ -32,6 +32,9 @@ public class CardController
     private CardData _data;
     private CardView _view;
     private DealerController _dealerController;
+    private bool _isCardAnimated;
+
+    public bool IsCardAnimated => _isCardAnimated;
 
     public CardData Data => _data;
 
@@ -46,13 +49,37 @@ public class CardController
             cardBoardIndex = _cardBoardIndex
         };
 
-        _view.SetCardImage(GameManager.inst.SpritesManager.GetCardSpriteWithType(_data.cardType));
+        PopulateCard();
 
         return this;
     }
     public void OnClick()
     {
-        _dealerController.OnClickedCard(this);
+        if(_data.cardState == CardData.CardState.FaceDown)
+        { 
+            _dealerController.OnClickedCard(this);
+        }
+    }
+
+    public void ShowCard()
+    {
+        _isCardAnimated = true;
+        _view.PlayShowCard();
+        _data.cardState = CardData.CardState.FaceUp;
+    }
+    public void HideCard()
+    {
+        _isCardAnimated = true;
+        _view.PlayHideCard();
+        _data.cardState = CardData.CardState.FaceDown;
+    }
+    private void PopulateCard()
+    {
+        _view.SetCardImage(GameManager.inst.SpritesManager.GetCardSpriteWithType(_data.cardType));
+    }
+    public void OnFinishAnimation()
+    {
+        _isCardAnimated = false;
     }
     public void DestroyCard()
     {
@@ -74,6 +101,21 @@ public class CardView : MonoBehaviour
     public void ClickCard()
     {
         _controller.OnClick();
+    }
+
+    public void PlayShowCard()
+    {
+        animator.ResetTrigger("Hide");
+        animator.SetTrigger("Show");
+    }
+    public void PlayHideCard()
+    {
+        animator.ResetTrigger("Show");
+        animator.SetTrigger("Hide");
+    }
+    public void OnFinishAnimation()
+    {
+        _controller.OnFinishAnimation();
     }
     public void SetCardImage(Color sprite)
     {

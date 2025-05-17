@@ -8,8 +8,7 @@ public class MatchController : MonoBehaviour
     public event Action<CardController,CardController> OnCardsMatch;
     public event Action OnCardsMissMatch;
     public event Action OnCardsCombo;
-
-    private int _comboCounter;
+     
     private CardController _cardA;
     private CardController _cardB;
 
@@ -18,21 +17,23 @@ public class MatchController : MonoBehaviour
         if(_cardA == null)
         {
             _cardA = card;
+            _cardA.ShowCard();
         }
         else if (_cardB == null && _cardA != card)
         {
             _cardB = card;
+            _cardB.ShowCard();
         }
 
         if(_cardB != null && _cardA != null)
         {
             if (DoCardsMatch())
             {
-                OnMatch();
+                StartCoroutine(DoMatchCards(_cardA,_cardB));
             }
             else
             {
-                OnMissMatch();
+                StartCoroutine(DoMissMatchCards(_cardA, _cardB));
             }
 
             ClearCheck();
@@ -42,21 +43,25 @@ public class MatchController : MonoBehaviour
     {
         return _cardA.Data.cardType == _cardB.Data.cardType;
     }
-    private void OnMatch()
+    IEnumerator DoMatchCards(CardController cardA,CardController cardB )
     {
-        OnCardsMatch?.Invoke(_cardA, _cardB);
+        yield return new WaitUntil(() => !cardA.IsCardAnimated && !cardB.IsCardAnimated);
+
+        OnCardsMatch?.Invoke(cardA, cardB);
+
     }
-    private void OnMissMatch()
+    IEnumerator DoMissMatchCards(CardController cardA, CardController cardB)
     {
+        yield return new WaitUntil(() => !cardA.IsCardAnimated && !cardB.IsCardAnimated);
+
+        cardA.HideCard();
+        cardB.HideCard();
+
         OnCardsMissMatch?.Invoke();
-    }
-    private void OnCombo()
-    {
-        OnCardsCombo?.Invoke();
+
     }
 
-
-    private void ClearCheck()
+    public void ClearCheck()
     {
         _cardA = null;
         _cardB = null;

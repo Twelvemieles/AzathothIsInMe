@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGameplay(int horizontalCards, int verticalCards)
     {
-        gameplayManager.StartGamePlay(horizontalCards, verticalCards);
         UIManager.ShowGameplayScreen();
+        gameplayManager.StartGamePlay(horizontalCards, verticalCards);
     }
     public void EndGamePlay(bool win,ScoreData scoreData)
     {

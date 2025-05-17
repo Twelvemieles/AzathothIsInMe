@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class DealerController : MonoBehaviour
@@ -17,6 +18,13 @@ public class DealerController : MonoBehaviour
     {
         ClearCards();
         CreatePairsOfTypes((horizontalCards * verticalCards) / 2);
+        StartCoroutine(DoEnableAndDisableCardsGroup());
+    }
+    private IEnumerator DoEnableAndDisableCardsGroup()
+    {
+        cardMatrixPanel.GetComponent<GridLayoutGroup>().enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        cardMatrixPanel.GetComponent<GridLayoutGroup>().enabled = false;
     }
     private void CreatePairsOfTypes(int totalCardTypes)
     {
@@ -42,6 +50,7 @@ public class DealerController : MonoBehaviour
     private void CreateCard(CardData.CardType cardType)
     {
         var card = Instantiate(cardPrefab, cardMatrixPanel).Init(_cards.Count, cardType,this);
+        
         _cards.Add(card);
     }
     public void OnClickedCard(CardController card)
@@ -58,7 +67,7 @@ public class DealerController : MonoBehaviour
     }
     public void ClearCards()
     {
-        foreach(var card in _cards)
+        foreach (var card in _cards)
         {
             card.DestroyCard();
         }
