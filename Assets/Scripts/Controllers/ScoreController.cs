@@ -29,17 +29,32 @@ public class ScoreController : MonoBehaviour
             _scoreData.score += deltaScore;
         }
 
-        AddCombo();
 
     }
-    private void AddCombo()
+    public void AddCombo()
     {
         _scoreData.actualCombo++;
         if(_scoreData.actualCombo > _scoreData.maxCombos && _scoreData.actualCombo > 1)
         {
 
             _scoreData.maxCombos = _scoreData.actualCombo - 1;
+            switch(_scoreData.actualCombo)
+            {
+                case 2:
+
+                    GameManager.inst.AudioManager.PlaySFX("Combo");
+                    break;
+                case 3:
+
+                    GameManager.inst.AudioManager.PlaySFX("DoubleCombo");
+                    break;
+                 default:
+
+                    GameManager.inst.AudioManager.PlaySFX("TripleCombo");
+                    break;
+            }
         }
+        
     }
     public void ResetCombos()
     {
