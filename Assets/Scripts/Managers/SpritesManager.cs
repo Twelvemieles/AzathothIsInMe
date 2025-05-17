@@ -8,6 +8,6 @@ public class SpritesManager : MonoBehaviour
     [SerializeField] private SpritesScriptableObject spritesConfig;
     public Sprite GetCardSpriteWithType(CardData.CardType type)
     {
-        return spritesConfig.SpritesConfig[(int)type].sprite;
+        return spritesConfig.SpritesConfig.Find(x => x.id == type.ToString()).sprite;
     }
 }
